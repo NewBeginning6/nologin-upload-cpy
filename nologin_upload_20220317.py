@@ -1,4 +1,4 @@
-import sys
+import sys,os
 import requests
 from termcolor import cprint
 import colorama
@@ -117,6 +117,15 @@ def ip_read():
         if ip:
             url.append(ip)
 
+def create_file():
+    current_path = os.getcwd()
+    path = current_path + '\\upload.cpyup'
+    if os.path.exists(path):
+        print('exist')
+    else:
+        with open('upload.cpyup', 'a', encoding='utf-8') as f:
+            f.write('11111')
+
 
 def main():
     cprint('''
@@ -134,8 +143,8 @@ def main():
         -u      Target URL
         ''', "blue")
         cprint('''Example:
-        python3 testpoc.py -h 10.10.10.10
-        python3 testpoc.py -r ip.txt''', "magenta")
+        python3 nologin_upload.py -h 10.10.10.10
+        python3 nologin_upload.py -r ip.txt''', "magenta")
         return
     a = str(sys.argv[1])  # 输入类型
     if a == '-u':
@@ -143,6 +152,7 @@ def main():
         url.append(target_url)
     if a == '-r':
         ip_read()
+    create_file()  # 创建用于上传的文件
     """开启多线程"""
     data = Queue()
     for ip in url:
